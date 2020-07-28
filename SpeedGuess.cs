@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Oxide.Plugins
 {
-	[Info("Speed Guess", "TMafono", "1.1.0")]
+	[Info("Speed Guess", "TMafono", "1.1.2")]
     [Description("Quickly guess randomly generated words to win a prize")]
     class SpeedGuess : RustPlugin
     {
@@ -47,6 +47,9 @@ namespace Oxide.Plugins
 			
 			[JsonProperty(PropertyName = "Event Length (Ends After X Seconds)")]
             public float EventLength = 60f;
+			
+			[JsonProperty(PropertyName = "Minimum number of players to start a event")]
+			public int StartEventMinPlayers = 10;
 			
 			[JsonProperty(PropertyName = "Chat Icon (SteamID64)")]
             public ulong ChatIcon = 0;
@@ -120,17 +123,17 @@ namespace Oxide.Plugins
             // English
             lang.RegisterMessages(new Dictionary<string, string>
             {
-                ["EventStart"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n<size=17><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
-				["EventEnd"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n<size=17><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
-				["EventEndWinner"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n<size=17><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
-				["EventNotStarted"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>No Active Events!</color></size>",
-				["EventStarted"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>Event already started</color></size>",
+                ["EventStart"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
+				["EventEnd"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
+				["EventEndWinner"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
+				["EventNotStarted"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
+				["EventStarted"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
 				["LogEventStart"] = "Speed Guess Tier {0} Event Started",
 				["LogEventEnd"] = "Speed Guess Event Ended",
 				["LogEventEndWinner"] = "Speed Guess Event Winner: {0} | User Won: {1} x{2}",
-				["WrongCode"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>Wrong Code!</color></size>",
-				["WrongSyntax"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>Wrong Command Syntax</color></size>",
-				["WrongPerm"] = "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>No Permission!</color></size>",
+				["WrongCode"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Code!</color></size>",
+				["WrongSyntax"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Command Syntax</color></size>",
+				["WrongPerm"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Permission!</color></size>",
             }, this);
         }
         #endregion Localization
@@ -170,6 +173,9 @@ namespace Oxide.Plugins
 		void StartSpeedGuessEvent(bool consolecmd = false)
         {
             if (EventActive)
+				return;
+			
+			if(BasePlayer.activePlayerList.Count <= config.StartEventMinPlayers && !consolecmd)
 				return;
 			
 			if(!consolecmd)

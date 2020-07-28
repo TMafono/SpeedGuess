@@ -25,6 +25,7 @@
   "Enable Automatic Events": true,
   "Event Frequency (Run Event Every X Seconds)": 300.0,
   "Event Length (Ends After X Seconds)": 60.0,
+  "Minimum number of players to start a event": 10,
   "Chat Icon (SteamID64)": 0,
   "Tier 1 Letters/Numbers count": 6,
   "Enable Tier 2 Events": false,
@@ -55,17 +56,17 @@ The default messages are in the `SpeedGuess.json` file under the `oxide/lang/en`
 
 ```json
 {
-  "EventStart": "<size=22><color=#1e90ff>Speed Guess</color></size>\n<size=17><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
-  "EventEnd": "<size=22><color=#1e90ff>Speed Guess</color></size>\n<size=17><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
-  "EventEndWinner": "<size=22><color=#1e90ff>Speed Guess</color></size>\n<size=17><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
-  "EventNotStarted": "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>No Active Events!</color></size>",
-  "EventStarted": "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>Event already started</color></size>",
+  "EventStart": "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
+  "EventEnd": "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
+  "EventEndWinner": "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
+  "EventNotStarted": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
+  "EventStarted": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
   "LogEventStart": "Speed Guess Tier {0} Event Started",
   "LogEventEnd": "Speed Guess Event Ended",
   "LogEventEndWinner": "Speed Guess Event Winner: {0} | User Won: {1} x{2}",
-  "WrongCode": "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>Wrong Code!</color></size>",
-  "WrongSyntax": "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>Wrong Command Syntax</color></size>",
-  "WrongPerm": "<size=22><color=#1e90ff>Speed Guess</color></size>\n\n<size=17><color=#ffa500>No Permission!</color></size>"
+  "WrongCode": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Code!</color></size>",
+  "WrongSyntax": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Command Syntax</color></size>",
+  "WrongPerm": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Permission!</color></size>"
 }
 ```
 
