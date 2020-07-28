@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Oxide.Plugins
 {
-	[Info("Speed Guess", "TMafono", "1.1.2")]
+	[Info("Speed Guess", "TMafono", "1.1.3")]
     [Description("Quickly guess randomly generated words to win a prize")]
     class SpeedGuess : RustPlugin
     {
@@ -125,7 +125,7 @@ namespace Oxide.Plugins
             {
                 ["EventStart"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
 				["EventEnd"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
-				["EventEndWinner"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
+				["EventEndWinner"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>\nReward: <color=#FFD700>{1}</color> x{2}",
 				["EventNotStarted"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
 				["EventStarted"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
 				["LogEventStart"] = "Speed Guess Tier {0} Event Started",
@@ -212,8 +212,6 @@ namespace Oxide.Plugins
 			EndEventTimer.Destroy();
 			
 			if(winner != null){
-				Broadcast(Lang("EventEndWinner",null,winner.displayName));
-
 				if(StartTier3Event) {
 					var randomitem = Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(config.EventT3LootTable.Count-1)))));
 					GiveItem(winner,config.EventT3LootTable.Keys.ElementAt(randomitem),config.EventT3LootTable.Values.ElementAt(randomitem));
@@ -307,6 +305,8 @@ namespace Oxide.Plugins
 
             itemName = item.info.displayName.english;
 			player.Command("note.inv", item.info.itemid, itemAmount);
+			Broadcast(Lang("EventEndWinner",null,player.displayName,itemName,itemAmount));
+			
 			if(config.LogEvents)
 				Puts(Lang("LogEventEndWinner",null,player.displayName,itemName,itemAmount));
 		}
