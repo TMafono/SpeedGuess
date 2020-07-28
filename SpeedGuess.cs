@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 namespace Oxide.Plugins
 {
 	[Info("Speed Guess", "TMafono", "1.1.0")]
-    [Description("Quickly guess random generated words to win a prize")]
+    [Description("Quickly guess randomly generated words to win a prize")]
     class SpeedGuess : RustPlugin
     {
 		#region Variables

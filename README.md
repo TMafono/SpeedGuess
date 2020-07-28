@@ -1,4 +1,4 @@
-**Speed Guess** Quickly guess random generated words to win a prize.
+**Speed Guess** Quickly guess randomly generated words to win a prize.
 
 ## Features
 
