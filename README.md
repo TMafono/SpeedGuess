@@ -69,6 +69,9 @@ The default messages are in the `SpeedGuess.json` file under the `oxide/lang/en`
 }
 ```
 
+## Credits
+
+- **Boris Yurinov** -- Logo idea and creation!
 
 
 
