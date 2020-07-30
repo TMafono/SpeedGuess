@@ -35,18 +35,34 @@
   "Enable Tier 3 Events": false,
   "Tier 3 Event Frequency (Every X events it will be a tier 3 event)": 100,
   "Tier 3 Letters/Numbers count": 14,
-  "Tier 1 Loot (Item Shortname | Item Ammount)": {
-    "stones": 100,
-    "wood": 100
-  },
-  "Tier 2 Loot (Item Shortname | Item Ammount)": {
-    "metal.fragments": 50,
-    "metal.refined": 20
-  },
-  "Tier 3 Loot (Item Shortname | Item Ammount)": {
-    "explosive.timed": 1,
-    "rifle.ak": 1
-  },
+  "Tier 1 Loot (Item Shortname | Item Ammount)": [
+    {
+      "stones": 100,
+      "wood": 100
+    },
+    {
+      "bandage": 100
+    }
+  ],
+  "Tier 2 Loot (Item Shortname | Item Ammount)": [
+    {
+      "metal.fragments": 50,
+      "metal.refined": 20
+    },
+    {
+      "leather": 60,
+      "cloth": 40
+    }
+  ],
+  "Tier 3 Loot (Item Shortname | Item Ammount)": [
+    {
+      "explosive.timed": 1
+    },
+    {
+      "rifle.ak": 1,
+      "ammo.rifle": 50
+    }
+  ],
   "Log Events to console": false
 }
 ```
@@ -59,7 +75,7 @@ The default messages are in the `SpeedType.json` file under the `oxide/lang/en` 
 {
   "EventStart": "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
   "EventEnd": "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
-  "EventEndWinner": "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
+  "EventEndWinner": "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>\nReward:{1}",
   "EventNotStarted": "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
   "EventStarted": "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
   "LogEventStart": "Speed Type Tier {0} Event Started",
