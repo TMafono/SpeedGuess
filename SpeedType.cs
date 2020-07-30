@@ -11,12 +11,12 @@ using Random = UnityEngine.Random;
 
 namespace Oxide.Plugins
 {
-	[Info("Speed Guess", "TMafono", "1.1.3")]
-    [Description("Quickly guess randomly generated words to win a prize")]
-    class SpeedGuess : RustPlugin
+	[Info("Speed Type", "TMafono", "1.1.4")]
+    [Description("Quickly type randomly generated words to win a prize")]
+    class SpeedType : RustPlugin
     {
 		#region Variables
-		private const string SpeedGuessAdmin = "speedguess.admin";
+		private const string SpeedTypeAdmin = "speedtype.admin";
 		
 		private bool EventActive = false;
 		private string RandomWord = "";
@@ -29,7 +29,7 @@ namespace Oxide.Plugins
 		
 		private List<string> EventWords = new List<string> {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9"};
 		
-		private readonly DynamicConfigFile dataFile = Interface.Oxide.DataFileSystem.GetFile("SpeedGuess");
+		private readonly DynamicConfigFile dataFile = Interface.Oxide.DataFileSystem.GetFile("SpeedType");
 
         private Dictionary<string, int> TierStates = new Dictionary<string, int>();
 		#endregion Variables
@@ -76,24 +76,46 @@ namespace Oxide.Plugins
             public int Tier3LetterCount = 14;
 			
 			[JsonProperty(PropertyName = "Tier 1 Loot (Item Shortname | Item Ammount)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public Dictionary<string, int> EventT1LootTable = new Dictionary<string, int>
+            public List<Dictionary<string, int>> EventT1LootTable = new List<Dictionary<string, int>>
             {
-                {"stones", 100},
-                {"wood", 100}
+				new Dictionary<string, int>
+				{
+					{"stones", 100},
+					{"wood", 100}
+				},
+				new Dictionary<string, int>
+				{
+					{"bandage", 100}
+				}
             };
 			
 			[JsonProperty(PropertyName = "Tier 2 Loot (Item Shortname | Item Ammount)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public Dictionary<string, int> EventT2LootTable = new Dictionary<string, int>
+			public List<Dictionary<string, int>> EventT2LootTable = new List<Dictionary<string, int>>
             {
-                {"metal.fragments", 50},
-                {"metal.refined", 20}
+				new Dictionary<string, int>
+				{
+					{"metal.fragments", 50},
+					{"metal.refined", 20}
+				},
+				new Dictionary<string, int>
+				{
+					{"leather", 60},
+					{"cloth", 40}
+				}
             };
-			
+
 			[JsonProperty(PropertyName = "Tier 3 Loot (Item Shortname | Item Ammount)", ObjectCreationHandling = ObjectCreationHandling.Replace)]
-            public Dictionary<string, int> EventT3LootTable = new Dictionary<string, int>
+			public List<Dictionary<string, int>> EventT3LootTable = new List<Dictionary<string, int>>
             {
-                {"explosive.timed", 1},
-                {"rifle.ak", 1}
+				new Dictionary<string, int>
+				{
+					{"explosive.timed", 1}
+				},
+				new Dictionary<string, int>
+				{
+					{"rifle.ak", 1},
+					{"ammo.rifle", 50}
+				}
             };
 			
 			[JsonProperty(PropertyName = "Log Events to console")]
@@ -123,17 +145,17 @@ namespace Oxide.Plugins
             // English
             lang.RegisterMessages(new Dictionary<string, string>
             {
-                ["EventStart"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
-				["EventEnd"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
-				["EventEndWinner"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>\nReward: <color=#FFD700>{1}</color> x{2}",
-				["EventNotStarted"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
-				["EventStarted"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
-				["LogEventStart"] = "Speed Guess Tier {0} Event Started",
-				["LogEventEnd"] = "Speed Guess Event Ended",
-				["LogEventEndWinner"] = "Speed Guess Event Winner: {0} | User Won: {1} x{2}",
-				["WrongCode"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Code!</color></size>",
-				["WrongSyntax"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Command Syntax</color></size>",
-				["WrongPerm"] = "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Permission!</color></size>",
+                ["EventStart"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
+				["EventEnd"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
+				["EventEndWinner"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>\nReward:{1}",
+				["EventNotStarted"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
+				["EventStarted"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
+				["LogEventStart"] = "Speed Type Tier {0} Event Started",
+				["LogEventEnd"] = "Speed Type Event Ended",
+				["LogEventEndWinner"] = "Speed Type Event Winner: {0} | User Won: {1} x{2}",
+				["WrongCode"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Wrong Code!</color></size>",
+				["WrongSyntax"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Wrong Command Syntax</color></size>",
+				["WrongPerm"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>No Permission!</color></size>",
             }, this);
         }
         #endregion Localization
@@ -141,7 +163,7 @@ namespace Oxide.Plugins
 		#region Initialization
 		private void Init()
         {
-            permission.RegisterPermission(SpeedGuessAdmin, this);
+            permission.RegisterPermission(SpeedTypeAdmin, this);
 			
 			if(config.Tier2EventStatus || config.Tier3EventStatus) {
 				TierStates = dataFile.ReadObject<Dictionary<string, int>>();
@@ -164,13 +186,13 @@ namespace Oxide.Plugins
 			if (config.AutoEventEnabled) {
 				EventAutoTimer = timer.Repeat(config.EventFrequency, 0, () =>
                 {
-                    StartSpeedGuessEvent();
+                    StartSpeedTypeEvent();
                 });
 			}
 		}
 		#endregion Hooks
 		
-		void StartSpeedGuessEvent(bool consolecmd = false)
+		void StartSpeedTypeEvent(bool consolecmd = false)
         {
             if (EventActive)
 				return;
@@ -202,25 +224,25 @@ namespace Oxide.Plugins
             
             EndEventTimer = timer.Once(config.EventLength, () =>
             {
-				EndSpeedGuessEvent();
+				EndSpeedTypeEvent();
             });
         }
 		
-		private void EndSpeedGuessEvent(BasePlayer winner = null)
+		private void EndSpeedTypeEvent(BasePlayer winner = null)
         {	
 			EventActive = false;
 			EndEventTimer.Destroy();
 			
 			if(winner != null){
 				if(StartTier3Event) {
-					var randomitem = Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(config.EventT3LootTable.Count-1)))));
-					GiveItem(winner,config.EventT3LootTable.Keys.ElementAt(randomitem),config.EventT3LootTable.Values.ElementAt(randomitem));
+					var RandomList = RandomGen(config.EventT3LootTable.Count);
+					GiveItem(winner,config.EventT3LootTable[RandomList]);
 				} else if (StartTier2Event) {
-					var randomitem = Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(config.EventT2LootTable.Count-1)))));
-					GiveItem(winner,config.EventT2LootTable.Keys.ElementAt(randomitem),config.EventT2LootTable.Values.ElementAt(randomitem));
+					var RandomList = RandomGen(config.EventT2LootTable.Count);
+					GiveItem(winner,config.EventT2LootTable[RandomList]);
 				} else {
-					var randomitem = Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(config.EventT1LootTable.Count-1)))));
-					GiveItem(winner,config.EventT1LootTable.Keys.ElementAt(randomitem),config.EventT1LootTable.Values.ElementAt(randomitem));
+					var RandomList = RandomGen(config.EventT1LootTable.Count);
+					GiveItem(winner,config.EventT1LootTable[RandomList]);
 				}
 				if(config.LogEvents)
 					Puts(Lang("LogEventEnd",null));
@@ -235,45 +257,53 @@ namespace Oxide.Plugins
         }
 		
 		[ChatCommand("guess")]
-        private void SpeedGuessCommand(BasePlayer player, string cmd, string[] args)
+        private void SpeedTypeCommand(BasePlayer player, string cmd, string[] args)
         {
 			if (args.Length == 1) {
-				if (!EventActive) {
-					Message(player,Lang("EventNotStarted",null));
-					return;
-				}
-				
-				if(args[0] == RandomWord) {
-					EndSpeedGuessEvent(player);
+				if(args[0].ToUpper() == "END") {
+					if(HasPermission(player)) {
+						if (EventActive){
+							EndSpeedTypeEvent();
+						}
+					}
 				} else {
-					Message(player,Lang("WrongCode",null));
+					if (!EventActive) {
+						Message(player,Lang("EventNotStarted",null));
+						return;
+					}
+					
+					if(args[0].ToUpper() == RandomWord) {
+						EndSpeedTypeEvent(player);
+					} else {
+						Message(player,Lang("WrongCode",null));
+					}
 				}
 			} else if (args.Length == 2) {
-				if(args[0] == "start") {
+				if(args[0].ToUpper() == "START") {
 					if(HasPermission(player)) {
-						if(args[1] == "t1") {
+						if(args[1].ToUpper() == "T1") {
 							if (EventActive){
 								Message(player,Lang("EventStarted",null));
 								return;
 							}
 							
-							StartSpeedGuessEvent(true);
-						} else if(args[1] == "t2") {
+							StartSpeedTypeEvent(true);
+						} else if(args[1].ToUpper() == "T2") {
 							if (EventActive){
 								Message(player,Lang("EventStarted",null));
 								return;
 							}
 							
 							StartTier2Event = true;
-							StartSpeedGuessEvent(true);
-						} else if(args[1] == "t3") {
+							StartSpeedTypeEvent(true);
+						} else if(args[1].ToUpper() == "T3") {
 							if (EventActive){
 								Message(player,Lang("EventStarted",null));
 								return;
 							}
 							
 							StartTier3Event = true;
-							StartSpeedGuessEvent(true);
+							StartSpeedTypeEvent(true);
 						} else {
 							Message(player,Lang("WrongSyntax",null));
 						}
@@ -287,28 +317,41 @@ namespace Oxide.Plugins
 		}
 		
 		#region Helpers
-		private void GiveItem(BasePlayer player, string itemName, int itemAmount = 1)
+		private int RandomGen(int TableSize)
         {
-			Item item = ItemManager.Create(FindItem(itemName));
-            if (item == null) {
-                return;
-            }
-
-            item.amount = itemAmount;
-
-            ItemContainer itemContainer = player.inventory.containerMain;
-
-            if (!player.inventory.GiveItem(item, itemContainer)) {
-                item.Remove();
-                return;
-            }
-
-            itemName = item.info.displayName.english;
-			player.Command("note.inv", item.info.itemid, itemAmount);
-			Broadcast(Lang("EventEndWinner",null,player.displayName,itemName,itemAmount));
+            return Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(TableSize-1)))));
+        }
+		
+		
+		private void GiveItem(BasePlayer player, Dictionary<string, int> SelectedList)
+        {
+			string ItemReward = String.Empty;
 			
-			if(config.LogEvents)
-				Puts(Lang("LogEventEndWinner",null,player.displayName,itemName,itemAmount));
+			foreach(var items in SelectedList)
+			{
+				Item item = ItemManager.Create(FindItem(items.Key));
+				if (item == null) {
+					return;
+				}
+
+				item.amount = items.Value;
+
+				ItemContainer itemContainer = player.inventory.containerMain;
+
+				if (!player.inventory.GiveItem(item, itemContainer)) {
+					item.Remove();
+					return;
+				}
+
+				var itemName = item.info.displayName.english;
+				player.Command("note.inv", item.info.itemid, items.Value);
+				ItemReward += "\n<color=#FFD700>" + itemName + "</color> x" + items.Value;
+				
+				if(config.LogEvents)
+					Puts(Lang("LogEventEndWinner",null,player.displayName,itemName,items.Value));
+			}
+			
+			Broadcast(Lang("EventEndWinner",null,player.displayName,ItemReward));
 		}
 		
 		private void CheckTierStatus()
@@ -347,7 +390,7 @@ namespace Oxide.Plugins
 		
 		private string SpeedEventWordGenerator(int wordcount)
 		{
-			var RandomGeneratedWord = "";
+			var RandomGeneratedWord = String.Empty;
 			
 			for (var i = 0; i < wordcount; i++) {
 				var randomletter = Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(EventWords.Count-1)))));
@@ -369,7 +412,7 @@ namespace Oxide.Plugins
 
         private bool HasPermission(BasePlayer player)
         {
-            return permission.UserHasPermission(player.UserIDString, SpeedGuessAdmin);
+            return permission.UserHasPermission(player.UserIDString, SpeedTypeAdmin);
         }
 
         private string Lang(string key, string id = null, params object[] args)

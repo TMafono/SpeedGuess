@@ -1,22 +1,23 @@
-**Speed Guess** Quickly guess randomly generated words to win a prize.
+**Speed Type** Quickly type randomly generated words to win a prize.
 
 ## Features
 
 - Randomly generated words with configurable lenghts.
-- Multiple reward tiers
-- Configurable rewards per tier
-- Automated events
+- Multiple reward tiers.
+- Configurable rewards per tier.
+- Automated events.
 
 ## Commands
 
-- **/guess <word>** -- Guess the random generated word to win a prize.
-- **/guess start t1** -- Manually Start Tier 1 Event ***(requires `speedguess.admin` permission)***
-- **/guess start t2** -- Manually Start Tier 2 Event ***(requires `speedguess.admin` permission)***
-- **/guess start t3** -- Manually Start Tier 3 Event ***(requires `speedguess.admin` permission)***
+- **/guess <word>** 	-- Type the random generated word to win a prize.
+- **/guess start t1** 	-- Manually Start Tier 1 Event ***(requires `speedtype.admin` permission)***
+- **/guess start t2** 	-- Manually Start Tier 2 Event ***(requires `speedtype.admin` permission)***
+- **/guess start t3** 	-- Manually Start Tier 3 Event ***(requires `speedtype.admin` permission)***
+- **/guess end** 		-- Ends any ongoing events ***(requires `speedtype.admin` permission)***
 
 ## Permissions
 
-- **speedguess.admin** -- Required to be able to use the console command to start an event
+- **speedtype.admin** -- Required to be able to use the console command to start an event
 
 ## Configuration
 
@@ -52,21 +53,21 @@
 
 ## Localization
 
-The default messages are in the `SpeedGuess.json` file under the `oxide/lang/en` directory.
+The default messages are in the `SpeedType.json` file under the `oxide/lang/en` directory.
 
 ```json
 {
-  "EventStart": "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
-  "EventEnd": "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
-  "EventEndWinner": "<size=20><color=#1e90ff>Speed Guess</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
-  "EventNotStarted": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
-  "EventStarted": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
-  "LogEventStart": "Speed Guess Tier {0} Event Started",
-  "LogEventEnd": "Speed Guess Event Ended",
-  "LogEventEndWinner": "Speed Guess Event Winner: {0} | User Won: {1} x{2}",
-  "WrongCode": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Code!</color></size>",
-  "WrongSyntax": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>Wrong Command Syntax</color></size>",
-  "WrongPerm": "<size=20><color=#1e90ff>Speed Guess</color></size>\n\n<size=16><color=#ffa500>No Permission!</color></size>"
+  "EventStart": "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#{0}>Tier {1} Event</color></size>\n\nThe first person to type:\n<color=#33ccff>/guess {2}</color>\nWill win a prize!",
+  "EventEnd": "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nNo Winners",
+  "EventEndWinner": "<size=20><color=#1e90ff>Speed Type</color></size>\n<size=16><color=#ffa500>Event Over!</color></size>\n\nThe Winner is:\n<color=#1e90ff>{0}</color>",
+  "EventNotStarted": "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>No Active Events!</color></size>",
+  "EventStarted": "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Event already started</color></size>",
+  "LogEventStart": "Speed Type Tier {0} Event Started",
+  "LogEventEnd": "Speed Type Event Ended",
+  "LogEventEndWinner": "Speed Type Event Winner: {0} | User Won: {1} x{2}",
+  "WrongCode": "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Wrong Code!</color></size>",
+  "WrongSyntax": "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Wrong Command Syntax</color></size>",
+  "WrongPerm": "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>No Permission!</color></size>"
 }
 ```
 
