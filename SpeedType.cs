@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Oxide.Plugins
 {
-	[Info("Speed Type", "TMafono", "1.1.4")]
+	[Info("Speed Type", "TMafono", "1.1.5")]
     [Description("Quickly type randomly generated words to win a prize")]
     class SpeedType : RustPlugin
     {
@@ -19,7 +19,7 @@ namespace Oxide.Plugins
 		private const string SpeedTypeAdmin = "speedtype.admin";
 		
 		private bool EventActive = false;
-		private string RandomWord = "";
+		private string RandomWord = String.Empty;
 		
 		private bool StartTier2Event = false;
 		private bool StartTier3Event = false;
@@ -140,7 +140,7 @@ namespace Oxide.Plugins
 		#endregion Configuration
 		
 		#region Localization
-        private new void LoadDefaultMessages()
+        protected override void LoadDefaultMessages()
         {
             // English
             lang.RegisterMessages(new Dictionary<string, string>
@@ -156,6 +156,7 @@ namespace Oxide.Plugins
 				["WrongCode"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Wrong Code!</color></size>",
 				["WrongSyntax"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>Wrong Command Syntax</color></size>",
 				["WrongPerm"] = "<size=20><color=#1e90ff>Speed Type</color></size>\n\n<size=16><color=#ffa500>No Permission!</color></size>",
+				["RewardFormat"] = "\n<color=#FFD700>{0}</color> x{1}",
             }, this);
         }
         #endregion Localization
@@ -245,11 +246,11 @@ namespace Oxide.Plugins
 					GiveItem(winner,config.EventT1LootTable[RandomList]);
 				}
 				if(config.LogEvents)
-					Puts(Lang("LogEventEnd",null));
+					Puts(Lang("LogEventEnd"));
 			} else {
-				Broadcast(Lang("EventEnd",null));
+				Broadcast(Lang("EventEnd"));
 				if(config.LogEvents)
-					Puts(Lang("LogEventEnd",null));
+					Puts(Lang("LogEventEnd"));
 			}
 			
 			StartTier2Event = false;
@@ -268,14 +269,14 @@ namespace Oxide.Plugins
 					}
 				} else {
 					if (!EventActive) {
-						Message(player,Lang("EventNotStarted",null));
+						Message(player,Lang("EventNotStarted"));
 						return;
 					}
 					
 					if(args[0].ToUpper() == RandomWord) {
 						EndSpeedTypeEvent(player);
 					} else {
-						Message(player,Lang("WrongCode",null));
+						Message(player,Lang("WrongCode"));
 					}
 				}
 			} else if (args.Length == 2) {
@@ -283,14 +284,14 @@ namespace Oxide.Plugins
 					if(HasPermission(player)) {
 						if(args[1].ToUpper() == "T1") {
 							if (EventActive){
-								Message(player,Lang("EventStarted",null));
+								Message(player,Lang("EventStarted"));
 								return;
 							}
 							
 							StartSpeedTypeEvent(true);
 						} else if(args[1].ToUpper() == "T2") {
 							if (EventActive){
-								Message(player,Lang("EventStarted",null));
+								Message(player,Lang("EventStarted"));
 								return;
 							}
 							
@@ -298,36 +299,36 @@ namespace Oxide.Plugins
 							StartSpeedTypeEvent(true);
 						} else if(args[1].ToUpper() == "T3") {
 							if (EventActive){
-								Message(player,Lang("EventStarted",null));
+								Message(player,Lang("EventStarted"));
 								return;
 							}
 							
 							StartTier3Event = true;
 							StartSpeedTypeEvent(true);
 						} else {
-							Message(player,Lang("WrongSyntax",null));
+							Message(player,Lang("WrongSyntax"));
 						}
 					} else {
-						Message(player,Lang("WrongPerm",null));
+						Message(player,Lang("WrongPerm"));
 					}
 				}
 			} else {
-				Message(player,Lang("WrongSyntax",null));
+				Message(player,Lang("WrongSyntax"));
 			}
 		}
 		
 		#region Helpers
-		private int RandomGen(int TableSize)
+		private int RandomGen(int tableSize)
         {
-            return Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(TableSize-1)))));
+            return Convert.ToInt32(Math.Round(Convert.ToDouble(Random.Range(Convert.ToSingle(0), Convert.ToSingle(tableSize-1)))));
         }
 		
 		
-		private void GiveItem(BasePlayer player, Dictionary<string, int> SelectedList)
+		private void GiveItem(BasePlayer player, Dictionary<string, int> selectedList)
         {
 			string ItemReward = String.Empty;
 			
-			foreach(var items in SelectedList)
+			foreach(var items in selectedList)
 			{
 				Item item = ItemManager.Create(FindItem(items.Key));
 				if (item == null) {
@@ -345,7 +346,7 @@ namespace Oxide.Plugins
 
 				var itemName = item.info.displayName.english;
 				player.Command("note.inv", item.info.itemid, items.Value);
-				ItemReward += "\n<color=#FFD700>" + itemName + "</color> x" + items.Value;
+				ItemReward += Lang("RewardFormat",null,itemName,items.Value);
 				
 				if(config.LogEvents)
 					Puts(Lang("LogEventEndWinner",null,player.displayName,itemName,items.Value));

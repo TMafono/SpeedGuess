@@ -2,10 +2,16 @@
 
 ## Features
 
-- Randomly generated words with configurable lenghts.
+- Randomly generated words with configurable lengths.
 - Multiple reward tiers.
 - Configurable rewards per tier.
 - Automated events.
+
+## Planed Features
+
+- Leaderboards system with either a 3/5/10 list of the top speed typers!
+  - With the setting to clear the leaderboard on wipe.
+- Ability to choose between randomly generated strings and predetermined words/sentences
 
 ## Commands
 
@@ -90,11 +96,3 @@ The default messages are in the `SpeedType.json` file under the `oxide/lang/en` 
 ## Credits
 
 - **Boris Yurinov** -- Logo idea and creation!
-
-
-
-
-
-
-
-
