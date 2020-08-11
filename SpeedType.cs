@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 namespace Oxide.Plugins
 {
-	[Info("Speed Type", "TMafono", "1.1.5")]
+	[Info("Speed Type", "TMafono", "1.1.6")]
     [Description("Quickly type randomly generated words to win a prize")]
     class SpeedType : RustPlugin
     {
