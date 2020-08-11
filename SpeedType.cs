@@ -386,6 +386,14 @@ namespace Oxide.Plugins
 		private ItemDefinition FindItem(string itemName)
         {
             ItemDefinition itemDef = ItemManager.FindItemDefinition(itemName.ToLower());
+			if (itemDef == null)
+            {
+                int itemId;
+                if (int.TryParse(itemName, out itemId))
+                {
+                    itemDef = ItemManager.FindItemDefinition(itemId);
+                }
+            }
             return itemDef;
         }
 		
